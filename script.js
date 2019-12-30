@@ -8,12 +8,8 @@
 // Cycle through each array index in the question set and re-assign the radio buttons when user goes to next question
 // Show the user their score out of the total questions (like 3 out of 10 correct)
 // Create an event listener for when user wants to restart the quiz
-// Add a progress bar
-// Show "Question 1, Question 2, etc. at the top"
-
-//Bonus: Map a copy of the original array with indexes in random order with each quiz session
-//Bonus: Tell the user which question was correct after each submission. 
-//Bonus: Show a timer. When time is out end the quiz. 
+// Bonus: add a progress bar
+// Bonus: Show "Question 1, Question 2, etc. at the top"
 
 const app = {}; //name space object
 
@@ -118,6 +114,7 @@ app.$displayScore = $('.score')
 app.$button = $('button')
 app.$overlay = $('#overlay')
 app.$progress = $('.progress')
+app.$form = $('.container')
 
 // GLOBALLY DECLARED VARIABLES
 const totalQuestions = app.questionArray.length
@@ -125,17 +122,17 @@ let score = 0;
 let counter = 0;
 let progressWidth = 20; //20px
 let currentProgress; 
-let questSet;
+let questSet;  
 
 //FUNCTIONS
 
-// TOGGLE FORM VISIBILITY
-app.toggleVisibility = function() { 
+// TOGGLE FORM VISIBILITY 
+app.toggleVisibility = () => {
     $('#overlay, .score, button').hide()
 }
 
 // ASSIGN NEW QUESTION SET
-app.loadNewQuestion = function() { 
+app.loadNewQuestion = () => {
     questSet = app.questionArray[counter] 
     app.$questionPrompt.text(counter+1 + ". " + questSet.prompt)
     for (let i=0; i<=3; i++) { //load question set
@@ -145,7 +142,7 @@ app.loadNewQuestion = function() {
 }
 
 // END QUIZ
-app.endQuiz = function() {  
+app.endQuiz = () => {
     app.$overlay.show()
     app.$displayScore.show().text(`You got ${score} out of ${totalQuestions} questions right!`)
     app.$button.show().html("Restart Quiz")
@@ -155,17 +152,17 @@ app.endQuiz = function() {
 }
 
 // LOAD PROGRESS BAR
-app.loadProgressBar = function () {
+app.loadProgressBar = () => {
     currentProgress = progressWidth*counter  
     app.$progress.width(currentProgress) 
 }
 
 // VALIDATE ANSWER
-app.checkAnswer = function(event) { 
+app.checkAnswer = (event) => {
     event.preventDefault()
     if ($('input:checked').val() === questSet.answer) { 
-        score = score + 1; //go to the next question
-    } 
+        score = score + 1; //go to the next question  
+    }  
     if (counter === (totalQuestions - 1)) { 
         app.endQuiz(); //if we reach the end of the question set, end quiz
     } else { //else continue to the next question
@@ -177,10 +174,12 @@ app.checkAnswer = function(event) {
 }
 
 // INITIALIZE EVENT LISTENERS
-app.init = () => {  
+app.init = () => {   
     // ON START AND RESTART BUTTONS
-    app.$button.on('click', app.toggleVisibility) 
-    app.$button.on('click', app.loadNewQuestion)
+    app.$button.on('click', function () {
+        app.toggleVisibility()
+        app.loadNewQuestion()
+    })  
     //ON SUBMIT BUTTON
     $('form').on('submit', app.checkAnswer) 
 };
@@ -189,4 +188,3 @@ app.init = () => {
 $(() => {  
     app.init();
 })  
-
