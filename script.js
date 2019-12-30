@@ -122,7 +122,7 @@ let score = 0;
 let counter = 0;
 let progressWidth = 20; //20px
 let currentProgress; 
-let questSet;  
+let questSet;   
 
 //FUNCTIONS
 
@@ -132,23 +132,25 @@ app.toggleVisibility = () => {
 }
 
 // RANDOMIZE ARRAY
-app.returnRandomArray = (array) => {
-    const arrayLength = array.length  
-    for (let i = 0; i < arrayLength ; i++) {
-        const randomIndex = Math.floor(Math.random() * arrayLength)
+app.returnRandomArray = (array) => { 
+    for (let i = array.length - 1; i > 0 ; i--) {
+        const randomIndex = Math.floor(Math.random() * i)
         const tempIndex = array[i]
         array[i] = array[randomIndex]
         array[randomIndex] = tempIndex
-      } 
+      }  
       return array
 } 
 
-// ASSIGN NEW QUESTION SET
+// GENERATE RANDOM QUESTION SET
+app.randomizeQuestArray = () => {
+    questSet = app.returnRandomArray(app.questionArray) 
+}
+
+// LOAD NEW QUESTION
 app.loadNewQuestion = () => {
-    const randomQuestions = app.returnRandomArray(app.questionArray) 
-    questSet = randomQuestions[counter] 
-    app.$questionPrompt.text(counter+1 + ". " + questSet.prompt)
-    const randomOptions = app.returnRandomArray(questSet.options)
+    app.$questionPrompt.text(counter+1 + ". " + questSet[counter].prompt)
+    const randomOptions = app.returnRandomArray(questSet[counter].options)
     for (let i=0; i<=3; i++) { //load question set
         app.$options[i].text(randomOptions[i]) 
         app.$radioVal[i].val(randomOptions[i]) 
@@ -174,7 +176,7 @@ app.loadProgressBar = () => {
 // VALIDATE ANSWER
 app.checkAnswer = (event) => {
     event.preventDefault()
-    if ($('input:checked').val() === questSet.answer) { 
+    if ($('input:checked').val() === questSet[counter].answer) { 
         score = score + 1; //go to the next question  
     }  
     if (counter === (totalQuestions - 1)) { 
@@ -192,6 +194,7 @@ app.init = () => {
     // ON START AND RESTART BUTTONS
     app.$button.on('click', function () {
         app.toggleVisibility()
+        app.randomizeQuestArray()
         app.loadNewQuestion() 
     })  
     //ON SUBMIT BUTTON
