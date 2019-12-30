@@ -59,9 +59,9 @@ body {
 
 .quiz-container {
     margin-top: 50px;
-    padding: 50px; 
+    padding: 75px; 
     background-color:white; 
-    max-width: 600px;
+    max-width: 700px;
     box-shadow: 15px 15px 50px 5px #e6e6e6;
     border-radius: 10px;
     min-height: 550px;
@@ -109,7 +109,7 @@ label {
     padding: 10px;
     display: inline-block;
     height: 100%;
-    width: 100%; 
+    width: 100%;  
 }
 
 input[type="radio"] {
@@ -121,44 +121,44 @@ input[type="radio"] {
     margin: 5px 0; 
     transition: all 0.2s;   
     font-weight: 400;
+    border-radius: 6px; 
 } 
 
 .container:hover ,
 input[type="radio"]:checked + label { 
-    color: rgb(30, 144, 150);
-    box-shadow: 0px 0px 5px 5px #e6e6e6;
-    border-radius: 6px;
+    color: rgb(45, 66, 160);
+    box-shadow: 0px 0px 5px 5px #f0f0f0;
+    border-radius: 6px; 
 } 
 
 input[type="submit"] {
     margin-top: 25px;
-    width:100px;
+    width: 125px;
     align-self: center;
 }
 
 button {
-    height: 40px;
-    position: absolute;
+    height: 40px; 
     margin-top: 50px;
 }
 
 button, 
 input[type="submit"] {
-    padding: 5px 20px;
-    border: 1.5px solid rgb(45, 66, 160);
+    padding: 10px 25px;
+    border: 1px solid rgb(45, 66, 160);
     color: rgb(45, 66, 160);
-    background-color: white; 
-    letter-spacing: 2px;
+    background-color: white;  
     color: rgb(45, 66, 160);
     transition: all 0.2s;   
-    border-radius: 6px;
+    border-radius: 25px;
+    font-family: inherit;
 }
 
 button:hover, 
 input[type="submit"]:hover {
     background-color:rgb(45, 66, 160);
     color: white;
-    border: 1.5px solid rgb(45, 66, 160);
+    border: 1px solid rgb(45, 66, 160);
 }
 
 .overlay {
@@ -173,17 +173,18 @@ input[type="submit"]:hover {
     align-items: center;
 }
 
-.score {
+.overlay p {
     position: absolute;
     display: inline-block;
-    margin-bottom: 50px;
-    font-size: 1.8rem;
+    margin-bottom: 80px;
+    font-size: 2rem;
+    text-align: center;
 }
 
 .progressBar {
     height: 10px;
     width: 200px;
-    border: 0.5px solid rgb(134, 134, 134);
+    border: 0.5px solid rgb(170, 170, 170);
     background-color:none;
     border-radius: 5px;
     align-self: center;
@@ -194,6 +195,8 @@ input[type="submit"]:hover {
     background-color: rgb(123, 205, 211);
     height: 100%; 
     width: 0%; 
+    border: 1px solid none;
+    border-radius: 5px;
 } 
 
 footer { 
