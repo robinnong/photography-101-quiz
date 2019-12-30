@@ -110,7 +110,7 @@ app.$radioVal = [
                     $('#option-c'),
                     $('#option-d')
                 ]
-app.$displayScore = $('.score') 
+app.$pContainer = $('.overlay p') 
 app.$button = $('button')
 app.$overlay = $('#overlay')
 app.$progress = $('.progress')
@@ -131,20 +131,34 @@ app.toggleVisibility = () => {
     $('#overlay, .score, button').hide()
 }
 
+// RANDOMIZE ARRAY
+app.returnRandomArray = (array) => {
+    const arrayLength = array.length  
+    for (let i = 0; i < arrayLength ; i++) {
+        const randomIndex = Math.floor(Math.random() * arrayLength)
+        const tempIndex = array[i]
+        array[i] = array[randomIndex]
+        array[randomIndex] = tempIndex
+      } 
+      return array
+} 
+
 // ASSIGN NEW QUESTION SET
 app.loadNewQuestion = () => {
-    questSet = app.questionArray[counter] 
+    const randomQuestions = app.returnRandomArray(app.questionArray) 
+    questSet = randomQuestions[counter] 
     app.$questionPrompt.text(counter+1 + ". " + questSet.prompt)
+    const randomOptions = app.returnRandomArray(questSet.options)
     for (let i=0; i<=3; i++) { //load question set
-        app.$options[i].text(questSet.options[i])
-        app.$radioVal[i].val(questSet.options[i]) 
+        app.$options[i].text(randomOptions[i]) 
+        app.$radioVal[i].val(randomOptions[i]) 
     } 
 }
 
 // END QUIZ
 app.endQuiz = () => {
-    app.$overlay.show()
-    app.$displayScore.show().text(`You got ${score} out of ${totalQuestions} questions right!`)
+    app.$overlay.show() 
+    app.$pContainer.show().html(`You got <b>${score}</b> out of <b>${totalQuestions}</b> questions right!`)
     app.$button.show().html("Restart Quiz")
     app.$progress.width(0) 
     counter = 0; //reset array index counter
@@ -154,7 +168,7 @@ app.endQuiz = () => {
 // LOAD PROGRESS BAR
 app.loadProgressBar = () => {
     currentProgress = progressWidth*counter  
-    app.$progress.width(currentProgress) 
+    app.$progress.width(currentProgress)
 }
 
 // VALIDATE ANSWER
@@ -178,7 +192,7 @@ app.init = () => {
     // ON START AND RESTART BUTTONS
     app.$button.on('click', function () {
         app.toggleVisibility()
-        app.loadNewQuestion()
+        app.loadNewQuestion() 
     })  
     //ON SUBMIT BUTTON
     $('form').on('submit', app.checkAnswer) 
@@ -188,3 +202,6 @@ app.init = () => {
 $(() => {  
     app.init();
 })  
+
+
+
