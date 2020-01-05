@@ -110,7 +110,7 @@ app.$radioVal = [
                     $('#option-c'),
                     $('#option-d')
                 ]
-app.$displayScore = $('.score') 
+app.$pContainer = $('.overlay p') 
 app.$button = $('button')
 app.$overlay = $('#overlay')
 app.$progress = $('.progress')
@@ -122,7 +122,7 @@ let score = 0;
 let counter = 0;
 let progressWidth = 20; //20px
 let currentProgress; 
-let questSet;  
+let questSet;   
 
 //FUNCTIONS
 
@@ -131,25 +131,36 @@ app.toggleVisibility = () => {
     $('#overlay, .score, button').hide()
 }
 
-// app.randomResult = (array) => {
-// 	const randomNum = Math.floor(Math.random()* array.length)
-// 	return array[randomNum]
-// }
+// RANDOMIZE ARRAY
+app.returnRandomArray = (array) => { 
+    for (let i = array.length - 1; i > 0 ; i--) {
+        const randomIndex = Math.floor(Math.random() * i)
+        const tempIndex = array[i]
+        array[i] = array[randomIndex]
+        array[randomIndex] = tempIndex
+      }  
+      return array
+} 
 
-// ASSIGN NEW QUESTION SET
+// GENERATE RANDOM QUESTION SET
+app.randomizeQuestArray = () => {
+    questSet = app.returnRandomArray(app.questionArray) 
+}
+
+// LOAD NEW QUESTION
 app.loadNewQuestion = () => {
-    questSet = app.questionArray[counter] 
-    app.$questionPrompt.text(counter+1 + ". " + questSet.prompt)
+    app.$questionPrompt.text(counter+1 + ". " + questSet[counter].prompt)
+    const randomOptions = app.returnRandomArray(questSet[counter].options)
     for (let i=0; i<=3; i++) { //load question set
-        app.$options[i].text(questSet.options[i])
-        app.$radioVal[i].val(questSet.options[i]) 
+        app.$options[i].text(randomOptions[i]) 
+        app.$radioVal[i].val(randomOptions[i]) 
     } 
 }
 
 // END QUIZ
 app.endQuiz = () => {
-    app.$overlay.show()
-    app.$displayScore.show().text(`You got ${score} out of ${totalQuestions} questions right!`)
+    app.$overlay.show() 
+    app.$pContainer.show().html(`You got <b>${score}</b> out of <b>${totalQuestions}</b> questions right!`)
     app.$button.show().html("Restart Quiz")
     app.$progress.width(0) 
     counter = 0; //reset array index counter
@@ -159,13 +170,13 @@ app.endQuiz = () => {
 // LOAD PROGRESS BAR
 app.loadProgressBar = () => {
     currentProgress = progressWidth*counter  
-    app.$progress.width(currentProgress) 
+    app.$progress.width(currentProgress)
 }
 
 // VALIDATE ANSWER
 app.checkAnswer = (event) => {
     event.preventDefault()
-    if ($('input:checked').val() === questSet.answer) { 
+    if ($('input:checked').val() === questSet[counter].answer) { 
         score = score + 1; //go to the next question  
     }  
     if (counter === (totalQuestions - 1)) { 
@@ -183,7 +194,8 @@ app.init = () => {
     // ON START AND RESTART BUTTONS
     app.$button.on('click', function () {
         app.toggleVisibility()
-        app.loadNewQuestion()
+        app.randomizeQuestArray()
+        app.loadNewQuestion() 
     })  
     //ON SUBMIT BUTTON
     $('form').on('submit', app.checkAnswer) 
