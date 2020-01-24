@@ -195,7 +195,7 @@ input[type="submit"]:hover {
 }
 
 .overlay p { 
-    margin-bottom: 30px;
+    margin: 0 10px 30px 10px;
     font-weight: 600;
     font-size: 2.4rem;
     text-align: center;
@@ -204,18 +204,18 @@ input[type="submit"]:hover {
 .progressBar {
     height: 8px;
     width: 200px;
-    border: 1px solid black;
-    background-color:none;
+    border: 1px solid none;
+    background-color: rgb(240, 240, 240);
     border-radius: 5px;
     align-self: center;
-    margin-top: 10px;   
+    margin-top: 15px;   
 }
 
 .progress { 
-    background-color: rgb(123, 205, 211);
+    background-image: linear-gradient(60deg, #96deda 0%, #50c9c3 100%); 
     height: 100%; 
     width: 0%; 
-    border: 1px solid rgb(123, 205, 211);
+    border: 1px solid none;
     border-radius: 5px; 
 } 
 
