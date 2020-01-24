@@ -115,6 +115,10 @@ app.$button = $('button')
 app.$overlay = $('#overlay')
 app.$progress = $('.progress')
 app.$form = $('.container')
+app.$timer = $('.timer span')
+
+// ADD POINTER TO CLICKABLE ELEMENTS AND LINKS
+$('label, button, input[type="submit"]').addClass('pointer')
 
 // GLOBALLY DECLARED VARIABLES
 const totalQuestions = app.questionArray.length
@@ -122,7 +126,7 @@ let score = 0;
 let counter = 0;
 let progressWidth = 20; //20px
 let currentProgress; 
-let questSet;   
+let questSet;    
 
 //FUNCTIONS
 
@@ -158,7 +162,7 @@ app.loadNewQuestion = () => {
 }
 
 // END QUIZ
-app.endQuiz = () => {
+app.endQuiz = () => { 
     app.$overlay.show() 
     app.$pContainer.show().html(`You got <b>${score}</b> out of <b>${totalQuestions}</b> questions right!`)
     app.$button.show().html("Restart Quiz")
@@ -175,30 +179,38 @@ app.loadProgressBar = () => {
 
 // VALIDATE ANSWER
 app.checkAnswer = (event) => {
-    event.preventDefault()
+    event.preventDefault()  
     if ($('input:checked').val() === questSet[counter].answer) { 
-        score = score + 1; //go to the next question  
-    }  
+        score = score + 1; //go to the next question   
+    }
     if (counter === (totalQuestions - 1)) { 
         app.endQuiz(); //if we reach the end of the question set, end quiz
     } else { //else continue to the next question
-        counter = counter + 1;
-        app.loadNewQuestion(); 
-        app.loadProgressBar();
-    } 
+        app.loadNextQuestion() 
+    }
     $('input').prop( "checked", false); //reset user selection
+}
+
+// LOAD NEXT QUESTION
+app.loadNextQuestion = () => { 
+    counter = counter + 1;
+    app.loadNewQuestion(); 
+    app.loadProgressBar();  
 }
 
 // INITIALIZE EVENT LISTENERS
 app.init = () => {   
+    $('section, h2').hide()
     // ON START AND RESTART BUTTONS
     app.$button.on('click', function () {
+        $('section, h2').show()
+        $('.overlay').css('background-color', 'white')
         app.toggleVisibility()
         app.randomizeQuestArray()
         app.loadNewQuestion() 
     })  
-    //ON SUBMIT BUTTON
-    $('form').on('submit', app.checkAnswer) 
+    //ON SUBMIT BUTTON  
+    $('form').on('submit', app.checkAnswer)  
 };
 
 // DOCUMENT READY

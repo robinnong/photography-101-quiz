@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Photography 101 Quiz</title>
     <!-- link to Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Bungee+Shade|Source+Sans+Pro:400,600&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600&display=swap" rel="stylesheet">
     <!-- link to fontawesome -->
     <script src="https://kit.fontawesome.com/f3369905b3.js" crossorigin="anonymous"></script>
     <!-- link to styles -->
@@ -15,42 +15,48 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
 </head>
 <body>
-    <div class="quiz-container wrapper">
-        <h1>Photography 101 Quiz</h1> 
-        <section> 
-            <div class="overlay" id="overlay">
-                <p>Test your knowledge of photography concepts.</p>
-                <button class="pointer animated fadeIn delay-0.2s">Start Quiz</button>
-            </div>
-            <h2>Q<span></span></h2> 
-            <form autocomplete="off"> 
-                <div class="container">
-                    <input type="radio" name="multi" value="" id="option-a" required>
-                    <label class="pointer" for="option-a"></label> 
-                </div>
-                <div class="container">
-                    <input type="radio" name="multi" value="" id="option-b" required>
-                    <label class="pointer" for="option-b"></label> 
-                </div>
-                <div class="container">
-                    <input type="radio" name="multi" value="" id="option-c" required>
-                    <label class="pointer" for="option-c"></label> 
-                </div>
-                <div class="container">
-                    <input type="radio" name="multi" value="" id="option-d" required>
-                    <label class="pointer" for="option-d"></label> 
-                </div>
-                <input type="submit" value="Continue" class="pointer">
-                <div class="progressBar">
-                    <span></span><div class="progress"></div>
-                </div>
-            </form> 
-        </section>
-    </div>
-    <footer> 
+    <header>
+        <h1>Photography Quiz</h1> 
         <a href="https://github.com/robinnong/photography-101-quiz"><i class="fab fa-github"></i></a>
+    </header>
+    <main>
+        <div class="quiz-container">
+            <h2>Q<span></span></h2> 
+            <section> 
+                <form autocomplete="off"> 
+                    <div class="container">
+                        <input type="radio" name="multi" value="" id="option-a" required>
+                        <label for="option-a"></label> 
+                    </div>
+                    <div class="container">
+                        <input type="radio" name="multi" value="" id="option-b" required>
+                        <label for="option-b"></label> 
+                    </div>
+                    <div class="container">
+                        <input type="radio" name="multi" value="" id="option-c" required>
+                        <label for="option-c"></label> 
+                    </div>
+                    <div class="container">
+                        <input type="radio" name="multi" value="" id="option-d" required>
+                        <label for="option-d"></label> 
+                    </div>
+                    <input type="submit" value="Continue">
+                    <div class="progressBar">
+                        <span></span><div class="progress"></div>
+                    </div>
+                </form> 
+            </section>
+        </div> 
+        <div class="overlay" id="overlay">
+            <p>Test your knowledge of photography concepts</p>
+            <button class="animated fadeIn delay-0.2s">Start Quiz</button>
+        </div> 
+    </main>
+    <footer>
+        <p>Code and design by Robin Nong. Image by <a href="rawpixel.com">rawpixel.com</a>.</p>
     </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>

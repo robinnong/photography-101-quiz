@@ -47,7 +47,16 @@ html {
 }
 
 body {
+    padding: 20px;    
+    min-height: 100vh;
     min-width: 350px;
+    font-family: 'Source Sans Pro', sans-serif;
+    color: rgb(32, 32, 32);
+    font-size: 1.7rem; 
+    background-image: url(assets/image-from-rawpixel-id-539934-jpeg.jpg);
+    background-size: cover;  
+    background-repeat: no-repeat;
+    position: relative;
 }
 
 /* default wrapper - DON'T CHANGE */
@@ -57,52 +66,65 @@ body {
 	margin: 0 auto;
 }
 
-.quiz-container {
-    margin-top: 50px;
-    padding: 75px; 
-    background-color:white; 
-    max-width: 700px;
-    box-shadow: 15px 15px 50px 5px #e6e6e6;
-    border-radius: 10px;
-    min-height: 550px;
-}
-
-section {
+header {
+    color: white;
     position: relative;
 }
 
-/* default sans serif font*/
-body {
-    font-family: 'Source Sans Pro', sans-serif;
-    color: rgb(32, 32, 32);
-    font-size: 1.7rem; 
+h1 { 
+    text-transform: uppercase;
+    letter-spacing: 2px; 
+    margin-bottom: 20px;
+    text-align: center; 
+    font-weight: 400;
+    font-size: 3rem;   
 }
 
+header a {
+    font-size: 2.5rem;  
+    display: inline-block; 
+    position: absolute;
+    top: 0;
+}  
+
+main {
+    position: relative; 
+}
+
+.quiz-container {
+    margin: 0 auto;
+    background-color: white;
+    margin-top: 50px;
+    padding: 60px 80px;  
+    min-height: 500px; 
+    max-width: 700px; 
+    border: 2px solid black;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between;
+}
+
+section {
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between;
+}
+
+/* default sans serif font*/
 .pointer {
     cursor: pointer;
 }
 
-h1 { 
-    font-family: 'Bungee Shade', sans-serif;
-    text-transform: uppercase;
-    margin-bottom: 25px;
-    letter-spacing: 2px;
-    font-size: 3.1rem;
-    text-align: center; 
-}
-
 h2 { 
-    font-size: 2rem;   
-    display:inline;
-    background-image: linear-gradient(#fff 60%, rgb(123, 205, 211) 55%);
     font-weight: 600;
-    line-height: 30px;
-} 
+    font-size: 2.4rem; 
+}  
 
 form {  
     margin-top: 20px; 
     display: flex;
-    flex-direction: column;  
+    flex-direction: column;   
 }
 
 label {
@@ -143,8 +165,7 @@ input[type="submit"] {
     padding: 10px 25px;
     border: 1px solid rgb(45, 66, 160);
     color: rgb(45, 66, 160);
-    background-color: white;  
-    color: rgb(45, 66, 160);
+    background-color: white;   
     transition: all 0.2s;   
     border-radius: 25px;
     font-family: inherit;
@@ -158,65 +179,71 @@ input[type="submit"]:hover {
 }
 
 .overlay {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
+    position: absolute; 
+    margin: auto;
     right: 0;
-    background-color: white;
+    left: 0;
+    top: 0;
+    bottom: 0; 
+    max-width: 700px; 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border: 2px solid black;
+    border-radius: 5px;
 }
 
 .overlay p { 
-    margin-bottom: 20px;
-    font-size: 2rem;
+    margin-bottom: 30px;
+    font-weight: 600;
+    font-size: 2.4rem;
     text-align: center;
 }
 
 .progressBar {
-    height: 10px;
+    height: 8px;
     width: 200px;
-    border: 0.5px solid rgb(170, 170, 170);
+    border: 1px solid black;
     background-color:none;
     border-radius: 5px;
     align-self: center;
-    margin-top: 10px;  
+    margin-top: 10px;   
 }
 
 .progress { 
     background-color: rgb(123, 205, 211);
     height: 100%; 
     width: 0%; 
-    border: 1px solid none;
-    border-radius: 5px;
+    border: 1px solid rgb(123, 205, 211);
+    border-radius: 5px; 
 } 
 
-footer { 
-	display: flex;
-	justify-content: center;
+footer {
+    color: white;
+    position: absolute;
+    bottom: 20px;
 }
 
 footer a {
-	font-size: 2.5rem;  
-	display: inline-block; 
-	padding: 20px; 
-	z-index: 20;
-}  
+    text-decoration: underline;
+}
 
 @media (max-width: 480px) {
+
     h1 { 
-        font-size: 2.8rem;
-    }
+        font-size: 2rem;
+    } 
 
     h2 {
-        font-size: 1.8rem;
-        line-height: 24px;
+        font-size: 2.2rem;
     }
 
     .quiz-container { 
-        padding: 20px; 
+        padding: 30px; 
+    }
+
+    form {
+        margin-bottom: 20px;  
     }
 }
