@@ -23,7 +23,7 @@ app.questionArray = [
         answer: "Aperture Priority mode" 
     },
     {
-        prompt: "___________ will gradually increase the grain on your photos",
+        prompt: "___________ will increase grain in photos",
         options: ["Increasing the shutter speed", 
                 "Decreasing the ISO", 
                 "Slowing down the shutter speed", 
@@ -179,25 +179,38 @@ app.loadProgressBar = () => {
 
 // VALIDATE ANSWER
 app.checkAnswer = (event) => {
-    event.preventDefault()  
-    if ($('input:checked').val() === questSet[counter].answer) { 
-        score = score + 1; //go to the next question   
-    }
-    if (counter === (totalQuestions - 1)) { 
-        app.endQuiz(); //if we reach the end of the question set, end quiz
-    } else { //else continue to the next question
-        app.loadNextQuestion() 
+    event.preventDefault() 
+    if (counter === (totalQuestions - 1)) { //if we reach the end of the question set, end quiz 
+        app.validateAnswer()
+        setTimeout(function(){
+            app.endQuiz(); 
+        }, 800) //end quiz after 1s
+    } else { //else continue to the next question 
+        app.validateAnswer()
+        setTimeout(function(){
+            app.loadNextQuestion()
+        }, 800) //load next question after 1s
     }
     $('input').prop( "checked", false); //reset user selection
 }
 
-// LOAD NEXT QUESTION
-app.loadNextQuestion = () => { 
-    counter = counter + 1;
-    app.loadNewQuestion(); 
-    app.loadProgressBar();  
+// VALIDATE ANSWER
+app.validateAnswer = () => {
+    if ($('input:checked').val() === questSet[counter].answer) { 
+        $('input:checked+label').append(` <i class="fas fa-check green"></i>`) //correct
+        score = score + 1; // increase score  
+    } else {
+        $('input:checked+label').append(` <i class="fas fa-times red"></i>`) //incorrect
+    }
 }
 
+// LOAD NEXT QUESTION
+app.loadNextQuestion = () => { 
+    counter = counter + 1; 
+    app.loadNewQuestion(); 
+    app.loadProgressBar();   
+}
+ 
 // INITIALIZE EVENT LISTENERS
 app.init = () => {   
     $('section, h2').hide()
