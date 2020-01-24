@@ -219,10 +219,11 @@ input[type="submit"]:hover {
     border-radius: 5px; 
 } 
 
-footer {
+footer { 
+    font-size: 1.4rem;
     color: white;
     position: absolute;
-    bottom: 20px;
+    bottom: 10px; 
 }
 
 footer a {
