@@ -26,7 +26,7 @@ app.questionArray = [
         prompt: "___________ will increase grain in photos",
         options: ["Increasing the shutter speed", 
                 "Decreasing the ISO", 
-                "Slowing down the shutter speed", 
+                "Decreasing the shutter speed", 
                 "Increasing the ISO"],
         answer: "Increasing the ISO"
     },
@@ -164,7 +164,7 @@ app.loadNewQuestion = () => {
 // END QUIZ
 app.endQuiz = () => { 
     app.$overlay.show() 
-    app.$pContainer.show().html(`You got <b>${score}</b> out of <b>${totalQuestions}</b> questions right!`)
+    app.$pContainer.show().html(`You got <b>${score}</b> of <b>${totalQuestions}</b> questions right!`)
     app.$button.show().html("Restart Quiz")
     app.$progress.width(0) 
     counter = 0; //reset array index counter
