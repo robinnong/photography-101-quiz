@@ -97,7 +97,8 @@ app.questionArray = [
 ]; //quiz array where each index is an question object
 
 // CACHED JQUERY SELECTORS
-app.$questionPrompt = $('h2 span') //Question prompt holder
+app.$questionNumber = $('h2 span') //Question number holder
+app.$questionPrompt = $('h3') //Question prommpt holder
 app.$options = [
                     $('#option-a + label'),
                     $('#option-b + label'),
@@ -114,8 +115,7 @@ app.$pContainer = $('.overlay p')
 app.$button = $('button')
 app.$overlay = $('#overlay')
 app.$progress = $('.progress')
-app.$form = $('.container')
-app.$timer = $('.timer span')
+app.$form = $('.container') 
 
 // ADD POINTER TO CLICKABLE ELEMENTS AND LINKS
 $('label, button, input[type="submit"]').addClass('pointer')
@@ -153,7 +153,8 @@ app.randomizeQuestArray = () => {
 
 // LOAD NEW QUESTION
 app.loadNewQuestion = () => {
-    app.$questionPrompt.text(counter+1 + ". " + questSet[counter].prompt)
+    app.$questionNumber.text(counter+1)
+    app.$questionPrompt.text(questSet[counter].prompt)
     const randomOptions = app.returnRandomArray(questSet[counter].options)
     for (let i=0; i<=3; i++) { //load question set
         app.$options[i].text(randomOptions[i]) 
@@ -184,14 +185,15 @@ app.checkAnswer = (event) => {
         app.validateAnswer()
         setTimeout(function(){
             app.endQuiz(); 
+            $('input').prop( "checked", false);  //reset user selection
         }, 800) //end quiz after 1s
     } else { //else continue to the next question 
         app.validateAnswer()
         setTimeout(function(){
             app.loadNextQuestion()
+            $('input').prop( "checked", false);  //reset user selection
         }, 800) //load next question after 1s
     }
-    $('input').prop( "checked", false); //reset user selection
 }
 
 // VALIDATE ANSWER
@@ -213,10 +215,10 @@ app.loadNextQuestion = () => {
  
 // INITIALIZE EVENT LISTENERS
 app.init = () => {   
-    $('section, h2').hide()
+    $('section, h2, h3').hide()
     // ON START AND RESTART BUTTONS
     app.$button.on('click', function () {
-        $('section, h2').show()
+        $('section, h2, h3').show()
         $('.overlay').css('background-color', 'white')
         app.toggleVisibility()
         app.randomizeQuestArray()
