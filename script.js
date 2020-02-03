@@ -212,7 +212,7 @@ app.loadNextQuestion = () => {
     app.loadNewQuestion(); 
     app.loadProgressBar();   
 }
- 
+
 // INITIALIZE EVENT LISTENERS
 app.init = () => {   
     $('section, h2, h3').hide()
