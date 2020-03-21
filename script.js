@@ -1,16 +1,3 @@
-//PESUDOCODE 
-
-// landing page which allows the user to click to start the quiz
-// Store all of the questions in an array (10 questions)
-// Each question has a set of answers 
-// Assign the question and set of answers to the html form's radio buttons
-// Create an event listener for when user clicks submit button to go to the next queston
-// Cycle through each array index in the question set and re-assign the radio buttons when user goes to next question
-// Show the user their score out of the total questions (like 3 out of 10 correct)
-// Create an event listener for when user wants to restart the quiz
-// Bonus: add a progress bar
-// Bonus: Show "Question 1, Question 2, etc. at the top"
-
 const app = {}; //name space object
 
 app.questionArray = [
