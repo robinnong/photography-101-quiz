@@ -84,8 +84,8 @@ app.questionArray = [
 ]; //quiz array where each index is an question object
 
 // CACHED JQUERY SELECTORS
-app.$questionNumber = $('h2 span') //Question number holder
-app.$questionPrompt = $('h3') //Question prommpt holder
+app.$questionNumber = $('h2 span'); //Question number holder
+app.$questionPrompt = $('h3'); //Question prommpt holder
 app.$options = [
                     $('#option-a + label'),
                     $('#option-b + label'),
@@ -98,121 +98,109 @@ app.$radioVal = [
                     $('#option-c'),
                     $('#option-d')
                 ]
-app.$pContainer = $('.overlay p') 
-app.$button = $('button')
-app.$overlay = $('#overlay')
-app.$progress = $('.progress')
-app.$form = $('.container') 
+app.$pContainer = $('.overlay p'); 
+app.$button = $('button');
+app.$overlay = $('#overlay');
+app.$progress = $('.progress');
+app.$form = $('.container'); 
 
 // ADD POINTER TO CLICKABLE ELEMENTS AND LINKS
-$('label, button, input[type="submit"]').addClass('pointer')
+$('label, button, input[type="submit"]').addClass('pointer');
 
 // GLOBALLY DECLARED VARIABLES
-const totalQuestions = app.questionArray.length
+const totalQuestions = app.questionArray.length;
 let score = 0;
 let counter = 0;
-let progressWidth = 20; //20px
-let currentProgress; 
 let questSet;    
 
 //FUNCTIONS
 
 // TOGGLE FORM VISIBILITY 
 app.toggleVisibility = () => {
-    $('#overlay, .score, button').hide()
+    $('section, h2, h3').show();
+    $('#overlay, .score, button').hide();
 }
 
 // RANDOMIZE ARRAY
 app.returnRandomArray = (array) => { 
     for (let i = array.length - 1; i > 0 ; i--) {
-        const randomIndex = Math.floor(Math.random() * i)
-        const tempIndex = array[i]
-        array[i] = array[randomIndex]
-        array[randomIndex] = tempIndex
+        const randomIndex = Math.floor(Math.random() * i);
+        const tempIndex = array[i];
+        array[i] = array[randomIndex];
+        array[randomIndex] = tempIndex;
       }  
-      return array
+      return array;
 } 
-
-// GENERATE RANDOM QUESTION SET
-app.randomizeQuestArray = () => {
-    questSet = app.returnRandomArray(app.questionArray) 
-}
 
 // LOAD NEW QUESTION
 app.loadNewQuestion = () => {
-    app.$questionNumber.text(counter+1)
-    app.$questionPrompt.text(questSet[counter].prompt)
-    const randomOptions = app.returnRandomArray(questSet[counter].options)
+    questSet = app.returnRandomArray(app.questionArray); 
+    app.$questionNumber.text(counter+1);
+    app.$questionPrompt.text(questSet[counter].prompt);
+    const randomOptions = app.returnRandomArray(questSet[counter].options);
     for (let i=0; i<=3; i++) { //load question set
-        app.$options[i].text(randomOptions[i]) 
-        app.$radioVal[i].val(randomOptions[i]) 
+        app.$options[i].text(randomOptions[i]); 
+        app.$radioVal[i].val(randomOptions[i]); 
     } 
 }
 
 // END QUIZ
 app.endQuiz = () => { 
-    app.$overlay.show() 
-    app.$pContainer.show().html(`You got <b>${score}</b> of <b>${totalQuestions}</b> questions right!`)
-    app.$button.show().html("Restart Quiz")
-    app.$progress.width(0) 
+    app.$overlay.show(); 
+    app.$pContainer.show().html(`You got <b>${score}</b> of <b>${totalQuestions}</b> questions right!`);
+    app.$button.show().html("Restart Quiz");
+    app.$progress.width(0); 
     counter = 0; //reset array index counter
     score = 0; //reset score 
 }
 
 // LOAD PROGRESS BAR
-app.loadProgressBar = () => {
-    currentProgress = progressWidth*counter  
-    app.$progress.width(currentProgress)
+app.loadProgressBar = (count) => {
+    const currentProgress = 20 * count;  //20px*counter
+    app.$progress.width(currentProgress);
 }
 
 // VALIDATE ANSWER
 app.checkAnswer = (event) => {
-    event.preventDefault() 
+    event.preventDefault(); 
     if (counter === (totalQuestions - 1)) { //if we reach the end of the question set, end quiz 
-        app.validateAnswer()
+        app.validateAnswer();
         setTimeout(function(){
             app.endQuiz(); 
             $('input').prop( "checked", false);  //reset user selection
-        }, 800) //end quiz after 1s
+        }, 800); //end quiz after 1s
     } else { //else continue to the next question 
-        app.validateAnswer()
+        app.validateAnswer();
         setTimeout(function(){
-            app.loadNextQuestion()
+            counter = counter + 1;
+            app.loadNewQuestion(); //load next question
+            app.loadProgressBar(counter); //load progress bar
             $('input').prop( "checked", false);  //reset user selection
-        }, 800) //load next question after 1s
+        }, 800); //load next question after 1s
     }
 }
 
 // VALIDATE ANSWER
 app.validateAnswer = () => {
     if ($('input:checked').val() === questSet[counter].answer) { 
-        $('input:checked+label').append(` <i class="fas fa-check green"></i>`) //correct
+        $('input:checked+label').append(` <i class="fas fa-check green"></i>`); //correct
         score = score + 1; // increase score  
     } else {
-        $('input:checked+label').append(` <i class="fas fa-times red"></i>`) //incorrect
+        $('input:checked+label').append(` <i class="fas fa-times red"></i>`); //incorrect
     }
-}
-
-// LOAD NEXT QUESTION
-app.loadNextQuestion = () => { 
-    counter = counter + 1; 
-    app.loadNewQuestion(); 
-    app.loadProgressBar();   
 }
 
 // INITIALIZE EVENT LISTENERS
 app.init = () => {   
-    $('section, h2, h3').hide()
+    $('section, h2, h3').hide();
     // ON START AND RESTART BUTTONS
     app.$button.on('click', function () {
-        $('section, h2, h3').show()
-        $('.overlay').css('background-color', 'white')
-        app.toggleVisibility()
-        app.randomizeQuestArray()
-        app.loadNewQuestion() 
+        $('.overlay').css('background-color', 'white');
+        app.toggleVisibility(); 
+        app.loadNewQuestion(); 
     })  
     //ON SUBMIT BUTTON  
-    $('form').on('submit', app.checkAnswer)  
+    $('form').on('submit', app.checkAnswer);  
 };
 
 // DOCUMENT READY
