@@ -99,8 +99,7 @@ main {
     position: relative; 
 }
 
-.quiz-container {
-    box-shadow: 0px 10px 30px 10px rgba(0, 0, 0, 0.1); 
+.quiz-container { 
     margin: 0 auto;
     background-color: white;
     margin-top: 50px;
@@ -111,6 +110,7 @@ main {
     display: flex;
     flex-direction: column; 
     justify-content: space-between;
+    position: relative;
 }
 
 section {
@@ -152,11 +152,12 @@ input[type="radio"] {
 }
 
 .container {
-    border: 1px solid #d1d1d1;
-    margin: 5px 0; 
-    transition: all 0.2s;   
+    color: #707070;
     font-weight: 400;
+    margin: 5px 0; 
+    border: 1px solid #d1d1d1;
     border-radius: 6px; 
+    transition: all 0.2s;   
 } 
 
 .container:hover, 
@@ -176,8 +177,8 @@ input[type="submit"] {
 button, 
 input[type="submit"] {
     padding: 10px 25px;
-    border: 1px solid rgb(45, 66, 160);
-    color: rgb(45, 66, 160);
+    border: 1px solid #2d42a0;
+    color: #2d42a0;
     background-color: white;   
     transition: all 0.2s;   
     border-radius: 25px;
@@ -186,9 +187,9 @@ input[type="submit"] {
 
 button:hover, 
 input[type="submit"]:hover {
-    background-color:rgb(45, 66, 160);
+    background-color:#2d42a0;
     color: white;
-    border: 1px solid rgb(45, 66, 160);
+    border: 1px solid #2d42a0;
 }
 
 .overlay {
@@ -217,7 +218,7 @@ input[type="submit"]:hover {
     height: 8px;
     width: 200px;
     border: 1px solid none;
-    background-color: rgb(240, 240, 240);
+    background-color: #f0f0f0;
     border-radius: 5px;
     align-self: center;
     margin-top: 15px;   
@@ -230,6 +231,21 @@ input[type="submit"]:hover {
     border: 1px solid none;
     border-radius: 5px; 
 } 
+
+.counterContainer { 
+    height: 35px;
+    width: 35px; 
+    font-weight: 600;
+    color: #2d42a0;
+    border: 2px solid #d1d1d1;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 40px;
+    right: 40px;
+}  
 
 footer { 
     font-size: 1.4rem;

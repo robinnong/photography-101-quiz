@@ -112,6 +112,7 @@ const totalQuestions = app.questionArray.length;
 let score = 0;
 let counter = 0;
 let questSet;    
+let interval; 
 
 //FUNCTIONS
 
@@ -119,6 +120,22 @@ let questSet;
 app.toggleVisibility = () => {
     $('section, h2, h3').show();
     $('#overlay, .score, button').hide();
+}
+
+
+app.timer = (counter) => {
+    interval = setInterval(function(){
+
+    if (counter > 0) {
+        counter--;
+        $('.counter').text(counter);
+    } else {
+        app.checkAnswer();
+        clearInterval(interval);
+        counter = 10;
+    }
+
+    }, 1000);
 }
 
 // RANDOMIZE ARRAY
@@ -142,6 +159,7 @@ app.loadNewQuestion = () => {
         app.$options[i].text(randomOptions[i]); 
         app.$radioVal[i].val(randomOptions[i]); 
     } 
+    app.timer(10);
 }
 
 // END QUIZ
@@ -161,22 +179,21 @@ app.loadProgressBar = (count) => {
 }
 
 // VALIDATE ANSWER
-app.checkAnswer = (event) => {
-    event.preventDefault(); 
+app.checkAnswer = () => { 
+    clearInterval(interval);
     if (counter === (totalQuestions - 1)) { //if we reach the end of the question set, end quiz 
         app.validateAnswer();
-        setTimeout(function(){
-            app.endQuiz(); 
-            $('input').prop( "checked", false);  //reset user selection
-        }, 800); //end quiz after 1s
+        $('input').prop( "checked", false);  //reset user selection
+        setTimeout(app.endQuiz, 700); //end quiz after 0.7s
     } else { //else continue to the next question 
         app.validateAnswer();
         setTimeout(function(){
             counter = counter + 1;
+            $('.counter').text('10');
             app.loadNewQuestion(); //load next question
             app.loadProgressBar(counter); //load progress bar
             $('input').prop( "checked", false);  //reset user selection
-        }, 800); //load next question after 1s
+        }, 700); //load next question after 0.7s
     }
 }
 
@@ -191,17 +208,22 @@ app.validateAnswer = () => {
 }
 
 // INITIALIZE EVENT LISTENERS
-app.init = () => {   
+app.init = () => {
+    $('.counterContainer').hide();
     $('section, h2, h3').hide();
     // ON START AND RESTART BUTTONS
     app.$button.on('click', function () {
+        $('.counterContainer').show();
         $('.overlay').css('background-color', 'white');
         app.toggleVisibility(); 
         app.loadNewQuestion(); 
     })  
     //ON SUBMIT BUTTON  
-    $('form').on('submit', app.checkAnswer);  
-};
+    $('form').on('submit', function(e) {
+        e.preventDefault();
+        app.checkAnswer();  
+    });
+}
 
 // DOCUMENT READY
 $(() => {  
