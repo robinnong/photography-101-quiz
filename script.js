@@ -220,8 +220,13 @@ app.init = () => {
     })  
     //ON SUBMIT BUTTON  
     $('form').on('submit', function(e) {
-        e.preventDefault();
-        app.checkAnswer();  
+        e.preventDefault(); 
+        if ($('input:checked').length > 0) {
+            $('.warning').text("");
+            app.checkAnswer();  
+        } else {
+            $('.warning').text("Please make a selection");
+        }
     });
 }
 

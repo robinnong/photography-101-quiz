@@ -251,6 +251,12 @@ input[type="submit"]:hover {
     right: 40px;
 }  
 
+.warning {
+    height:10px;
+    text-align: center;
+    color: tomato;
+}
+
 footer { 
     font-size: 1.4rem;
     color: white;
