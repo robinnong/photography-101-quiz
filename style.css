@@ -142,27 +142,28 @@ form {
     flex-direction: column;   
 }
 
-label {
-    padding: 10px;
-    display: inline-block;
-    height: 100%;
-    width: 100%;  
-}
-
 input[type="radio"] {
-    display: none;
+    position: relative;
+    top: 32.5px;
+    left: 10px;
+    align-self: flex-start;
 }
 
-.container {
+label {
+    display: inline-block;
     color: #707070;
     font-weight: 400;
+    height: 100%;
+    width: 100%;  
+    padding: 10px;
+    padding-left: 30px;
     margin: 5px 0; 
     border: 1px solid #d1d1d1;
     border-radius: 6px; 
     transition: all 0.2s;   
 } 
 
-.container:hover, 
+label:hover,
 input[type="radio"]:checked + label { 
     color: #2d42a0;
     border: 1px solid #2d42a0;
