@@ -145,12 +145,13 @@ app.returnRandomArray = (array) => {
         const tempIndex = array[i];
         array[i] = array[randomIndex];
         array[randomIndex] = tempIndex;
-      }  
-      return array;
+    }  
+    return array;
 } 
 
 // LOAD NEW QUESTION
 app.loadNewQuestion = () => {
+    $('input').prop("checked", false);  //reset user selection
     app.loadProgressBar(counter); //load progress bar 
     questSet = app.returnRandomArray(app.questionArray); 
     app.$questionNumber.text(counter+1);
@@ -165,6 +166,7 @@ app.loadNewQuestion = () => {
 
 // END QUIZ
 app.endQuiz = () => { 
+    $('input').prop("checked", false);  //reset user selection
     app.$overlay.show(); 
     app.$pContainer.show().html(`You got <b>${score}</b> of <b>${totalQuestions}</b> questions right!`);
     app.$button.show().html("Restart Quiz");
@@ -179,25 +181,21 @@ app.loadProgressBar = (count) => {
     app.$progress.width(currentProgress);
 }
 
+// DELAY
+app.wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 // VALIDATE ANSWER
 app.checkAnswer = () => { 
     clearInterval(interval);
     app.validateAnswer(); 
     if (counter === (totalQuestions - 1)) { //if we reach the end of the question set, end quiz 
-        wait(700).then(app.endQuiz);
+        app.wait(700).then(app.endQuiz);
     } else { //else continue to the next question  
-        wait(700).then(app.loadNewQuestion); //load next question after 0.7s
+        app.wait(700).then(app.loadNewQuestion); //load next question after 0.7s
         counter = counter + 1;
         $('.counter').text('10');
     }
 }
-
-function wait(ms) {
-    return new Promise(function(resolve) {
-        setTimeout(resolve, ms);
-        $('input').prop("checked", false);  //reset user selection
-    });
-} 
 
 // VALIDATE ANSWER
 app.validateAnswer = () => {
