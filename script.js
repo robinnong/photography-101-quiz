@@ -151,6 +151,7 @@ app.returnRandomArray = (array) => {
 
 // LOAD NEW QUESTION
 app.loadNewQuestion = () => {
+    app.loadProgressBar(counter); //load progress bar 
     questSet = app.returnRandomArray(app.questionArray); 
     app.$questionNumber.text(counter+1);
     app.$questionPrompt.text(questSet[counter].prompt);
@@ -181,21 +182,22 @@ app.loadProgressBar = (count) => {
 // VALIDATE ANSWER
 app.checkAnswer = () => { 
     clearInterval(interval);
+    app.validateAnswer(); 
     if (counter === (totalQuestions - 1)) { //if we reach the end of the question set, end quiz 
-        app.validateAnswer();
-        $('input').prop( "checked", false);  //reset user selection
-        setTimeout(app.endQuiz, 700); //end quiz after 0.7s
-    } else { //else continue to the next question 
-        app.validateAnswer();
-        setTimeout(function(){
-            counter = counter + 1;
-            $('.counter').text('10');
-            app.loadNewQuestion(); //load next question
-            app.loadProgressBar(counter); //load progress bar
-            $('input').prop( "checked", false);  //reset user selection
-        }, 700); //load next question after 0.7s
+        wait(700).then(app.endQuiz);
+    } else { //else continue to the next question  
+        wait(700).then(app.loadNewQuestion); //load next question after 0.7s
+        counter = counter + 1;
+        $('.counter').text('10');
     }
 }
+
+function wait(ms) {
+    return new Promise(function(resolve) {
+        setTimeout(resolve, ms);
+        $('input').prop("checked", false);  //reset user selection
+    });
+} 
 
 // VALIDATE ANSWER
 app.validateAnswer = () => {
