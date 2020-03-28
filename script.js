@@ -115,26 +115,22 @@ let questSet;
 let interval; 
 
 //FUNCTIONS
-
 // TOGGLE FORM VISIBILITY 
 app.toggleVisibility = () => {
     $('section, h2, h3').show();
     $('#overlay, .score, button').hide();
 }
 
-
 app.timer = (counter) => {
     interval = setInterval(function(){
-
-    if (counter > 0) {
-        counter--;
-        $('.counter').text(counter);
-    } else {
-        app.checkAnswer();
-        clearInterval(interval);
-        counter = 10;
-    }
-
+        if (counter > 0) {
+            counter--;
+            $('.counter').text(counter);
+        } else {
+            app.checkAnswer();
+            clearInterval(interval);
+            counter = 10;
+        }
     }, 1000);
 }
 
@@ -151,18 +147,24 @@ app.returnRandomArray = (array) => {
 
 // LOAD NEW QUESTION
 app.loadNewQuestion = () => {
+    counter = counter + 1;
+    $('.counter').text('10');
     $('input').prop("checked", false);  //reset user selection
     app.loadProgressBar(counter); //load progress bar 
-    questSet = app.returnRandomArray(app.questionArray); 
-    app.$questionNumber.text(counter+1);
-    app.$questionPrompt.text(questSet[counter].prompt);
-    const randomOptions = app.returnRandomArray(questSet[counter].options);
-    for (let i=0; i<=3; i++) { //load question set
+    app.$questionNumber.text(counter);
+    app.$questionPrompt.text(questSet[counter - 1].prompt);
+    // Generate multiple choice options in random order
+    const randomOptions = app.returnRandomArray(questSet[counter -1].options); 
+    //load question set
+    for (let i=0; i<=3; i++) { 
         app.$options[i].text(randomOptions[i]); 
         app.$radioVal[i].val(randomOptions[i]); 
     } 
-    app.timer(10);
+    app.timer(10); // Start 10s timer
 }
+
+// GENERATE A RANDOMLY ORDERED SET OF QUESTIONS
+app.loadNewQuestionSet = () => questSet = app.returnRandomArray(app.questionArray);
 
 // END QUIZ
 app.endQuiz = () => { 
@@ -176,10 +178,7 @@ app.endQuiz = () => {
 }
 
 // LOAD PROGRESS BAR
-app.loadProgressBar = (count) => {
-    const currentProgress = 20 * count;  //20px*counter
-    app.$progress.width(currentProgress);
-}
+app.loadProgressBar = (count) => app.$progress.width(20 * count); //20px*counter
 
 // DELAY
 app.wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -188,18 +187,13 @@ app.wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 app.checkAnswer = () => { 
     clearInterval(interval);
     app.validateAnswer(); 
-    if (counter === (totalQuestions - 1)) { //if we reach the end of the question set, end quiz 
-        app.wait(700).then(app.endQuiz);
-    } else { //else continue to the next question  
-        app.wait(700).then(app.loadNewQuestion); //load next question after 0.7s
-        counter = counter + 1;
-        $('.counter').text('10');
-    }
+    //if we reach the end of the question set, end quiz, else continue to the next question and load next question after 0.7s
+    counter === totalQuestions ? app.wait(700).then(app.endQuiz) : app.wait(700).then(app.loadNewQuestion);  
 }
 
 // VALIDATE ANSWER
 app.validateAnswer = () => {
-    if ($('input:checked').val() === questSet[counter].answer) { 
+    if ($('input:checked').val() === questSet[counter-1].answer) { 
         $('input:checked+label').append(` <i class="fas fa-check green"></i>`); //correct
         score = score + 1; // increase score  
     } else {
@@ -216,6 +210,7 @@ app.init = () => {
         $('.counterContainer').show();
         $('.overlay').css('background-color', 'white');
         app.toggleVisibility(); 
+        app.loadNewQuestionSet();
         app.loadNewQuestion(); 
     })  
     //ON SUBMIT BUTTON  
